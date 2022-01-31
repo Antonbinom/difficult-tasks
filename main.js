@@ -1,33 +1,41 @@
-// способ первый
-let num = 266219;
-let numArr = String(num).split('');
-let count = 1;
-numArr.forEach(function (elem) {
-	count *= elem;
-});
-console.log(count);
+(function () {
+	'use strict';
+	// this function is strict...
+}());
 
-let countTripled = count * 3;
+let lang = 'ru';
+let daysRu = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+let daysEN = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-console.log(countTripled);
-console.log(countTripled.toString().slice(0, 2));
+// Первый способ
+if (lang === 'ru') {
+	console.log(daysRu);
+} else {
+	console.log(daysEN);
+}
 
+// Второй способ
+switch (lang) {
+	case 'ru':
+		console.log(daysRu);
+		break;
+	case 'en':
+		console.log(daysEN);
+		break;
+}
 
-// способ второй
-// let num = 266219;
+// Третий способ
+let daysArr = {
+	'ru': ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'],
+	'en': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+};
+console.log(daysArr[lang]);
 
-// function multiply() {
-// 	numArr = String(num).split('');
-// 	let count = 1;
-// 	for (i = 0; i < numArr.length; i++) {
-// 		count *= numArr[i];
-// 	}
-// 	console.log(count);
+// ==============================================================
+// Задание 2
 
-// 	let countTripled = count * 3;
-// 	console.log(countTripled);
+let namePerson = 'Артем';
 
-// 	console.log(countTripled.toString().slice(0, 2));
-// }
-
-// multiply();
+namePerson === 'Артем' ? console.log('Директор') :
+	namePerson === 'Александр' ? console.log('преподаватель') :
+	console.log('студент');
