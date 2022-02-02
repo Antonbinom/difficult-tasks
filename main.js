@@ -1,19 +1,18 @@
 'use strict';
 
-let number;
+let arr = ['10', '23', '41', '2', '4', '14', '420', '200', '344', '142', '42', '24'];
+let newArr = arr.filter(num => num[0] == '2' || num[0] == '4');
 
-const isNumber = function (num) {
-	return !isNaN(parseFloat(num) && isFinite(num));
-};
+console.log(newArr);
 
-const request = function () {
-	do {
-		number = prompt('Введите число', '123');
-	} while (!isNumber(number));
-	return number;
-};
+let n = 100;
 
-isNumber();
-request();
+nextPrime:
+	for (let i = 0; i <= n; i++) {
 
-console.log(number.trim().split(' ')[0].replace(/[^+\d]/g, ''));
+		for (let n = 2; n < i; n++) {
+			if (i % n == 0) continue nextPrime;
+		}
+
+		console.log(i + ' делитится на ' + 1 + ' и на ' + i);
+	}
