@@ -1,19 +1,15 @@
 'use strict';
 
-let number;
-
 const isNumber = function (num) {
 	return !isNaN(parseFloat(num) && isFinite(num));
 };
 
-const request = function () {
-	do {
-		number = prompt('Введите число', '123');
-	} while (!isNumber(number));
-	return number;
-};
+while (!isNumber(num)) {
+	var num = prompt('Введите число', '');
+	if (num == null) break;
+	num = num.trim().split(' ')[0].replace(/[^+\d]/g, '');
+}
 
 isNumber();
-request();
 
-console.log(number.trim().split(' ')[0].replace(/[^+\d]/g, ''));
+console.log(num);
