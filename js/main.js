@@ -1,17 +1,26 @@
 'use strict';
 
-const headerInput = document.querySelector('.header-input'),
-	todoList = document.querySelector('.todo-list'),
-	todoControl = document.querySelector('.todo-control'),
-	todoCompleted = document.querySelector('.todo-completed');
+const headerInput = document.querySelector('.header-input');
+const todoList = document.querySelector('.todo-list');
+const todoControl = document.querySelector('.todo-control');
+const todoCompleted = document.querySelector('.todo-completed');
+let toDoData = []; // создаем массив куда будем добавлять новые тудухи
 
-const todoData = []; // создаем массив куда будем добавлять новые тудухи
+// преобразуем данные в массив
+const todoStorage = function () {
+	if (localStorage.getItem('toDoData')) { // если в localStorage хранятся данные
+		toDoData = JSON.parse(localStorage.getItem('toDoData')); // преобразуем их в массив
+	}
+};
+todoStorage();
 
+// Отрисовываем верстку
 const render = function () {
-	todoList.innerHTML = ''; // при добавлении новой toDo
-	todoCompleted.innerHTML = '';
+	todoList.innerHTML = ''; // очищаем верстку в списке дел
+	todoCompleted.innerHTML = ''; // очищаем верстку в списке выполненных дел
 
-	todoData.forEach(function (item, index) { // перебираем массив toDo
+	// перебираем массив toDo
+	toDoData.forEach(function (item, index) {
 		const li = document.createElement('li'); // создаем элемент li
 
 		// с классом
@@ -22,27 +31,15 @@ const render = function () {
 			'<button class="todo-remove"></button>' +
 			'<button class="todo-complete"></button>' +
 			'</div>';
+
 		// если у объекта свойство complited == true
 		if (item.completed) {
 			todoCompleted.append(li); // добавляем в завершенные
-			console.log(todoData)
-
 		} else {
 			todoList.append(li); // иначе в незавершенных
-			console.log()
-
 		}
 
-		localStorage.setItem(todoData, JSON.stringify(todoData));
-
-		console.log(typeof todoData); // объект
-		console.log(todoData); // [1, 2, 3]
-
-
-
-
-
-		// localStorage.setItem('text' + index, item.text);
+		localStorage.setItem('toDoData', JSON.stringify(toDoData)); // добавляем данные в localStorage и преобразуем в строку
 
 		// при нажатии на иконку с галочкой
 		li.querySelector('.todo-complete').addEventListener('click', function () {
@@ -50,12 +47,11 @@ const render = function () {
 			render();
 		});
 
-		//при нажатии на корзину ужаляем дело
+		//при нажатии на корзину удаляем дело
 		li.querySelector('.todo-remove').addEventListener('click', function () {
-			li.remove();
-			todoData.splice(index, 1);
-			localStorage.removeItem(index, item.text);
-			console.log(index);
+			li.remove(); // удаляем верстку
+			toDoData.splice(index, 1); // удаляем объект в массиве
+			localStorage.setItem('toDoData', JSON.stringify(toDoData)); // вносим изменение в localStorage и переводим в строку
 		});
 	});
 };
@@ -64,21 +60,20 @@ const render = function () {
 todoControl.addEventListener('submit', function (event) {
 	event.preventDefault();
 
-	if (headerInput.value == '') {
-		headerInput.placeholder = 'Введите название задачи!';
-
+	if (headerInput.value == '') { // если инпут пустой
+		headerInput.placeholder = 'Введите название задачи!'; // выводим сообщение в placeholder
 	} else {
 		const newTodo = { // создаем новый объект  со свойствами
 			text: headerInput.value, // значение берем из инпута
 			completed: false
 		};
 
-		todoData.push(newTodo); // и вставляем элемент в массив
+		toDoData.push(newTodo); // и вставляем элемент в массив
 		headerInput.value = ''; // очищаем инпут
 
-		render(); // запускаем функцию где создается новый элемент
+		render(); // запускаем функцию где отрисовываем верстку
 		headerInput.placeholder = 'Какие планы?';
 	}
 });
 
-localStorage.removeItem('text0');
+render(); // отрисовываем страницу при перезагрузки исходя из данных localStorage
