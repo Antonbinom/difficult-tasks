@@ -1,21 +1,33 @@
 'use strict';
 
-const input = document.querySelector('#input');
-const text = document.querySelector('p');
+// Анимация
+const circle = document.querySelector('.circle');
+const circleSmall = document.querySelector('.circle-small');
+const circleBig = document.querySelector('.circle-big');
+const btnStart = document.querySelector('#start');
+const btnReset = document.querySelector('#reset');
 
-// передаем текст из инпута в параграф
-const textOutput = () => {
-	text.textContent = input.value;
+let active = false;
+let count = 0;
+let idInterval;
+
+const animate = () => {
+	count++;
+	idInterval = requestAnimationFrame(animate);
+
+	// if (count < 200) {
+	// 	square.style.left = count * 3 + 'px';
+	// 	circle.style.top = count * 3 + 'px';
+	// } else if (count < 400) {
+	// 	square.style.left = count * 3 + 'px';
+	// } else {
+	// 	cancelAnimationFrame(idInterval);
+	// }
 };
 
-// не даем запустить функцию пока не перестанем вводить текст
-const debounce = (callback) => {
-	let timeout; // создаем счетчик
-	return (argument) => { //Возвращаем функцию вместе с ее аргументом
-		clearTimeout(timeout); // Сбрасываем запуск функции
-		timeout = setTimeout(callback, 300, argument); // Помещаем в функцию timeout функцию переданную в качестве аргумента в debounce
-	};
-}
-
-const debouncedOnInput = debounce(textOutput); // запускаем функцию с аргументом в виде текста
-input.addEventListener('input', debouncedOnInput); // запускаем функцию при вводе текста
+btnStart.addEventListener('click', () => {
+	circleBig.style.animation = "moving 3s infinite linear";
+});
+btnReset.addEventListener('click', () => {
+	circleBig.style.animation = "moving 3s infinite linear";
+});
